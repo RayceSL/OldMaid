@@ -69,7 +69,7 @@ let hand = [];
 let player1 = [];
 let player2 = [];
 
-let i = 7;
+let handSize = 7;
 
 /* 
 ███████ ██    ██ ███    ██  ██████ ████████ ██  ██████  ███    ██ ███████ 
@@ -98,6 +98,23 @@ function deal() {
     deck.shift();
 }
 
+function findPair() {
+    hand.sort((a,b) => a.rank - b.rank);
+    let i = 0
+    while(i < hand.length - 1) {
+        if (hand[0].rank == hand[1].rank) {
+            hand.shift();
+            hand.shift();
+            console.log(hand);
+        } else {
+            hand.push(hand[0]);
+            hand.shift();
+            console.log(hand);
+        }
+        i++;
+    }
+}
+
 /* 
  ██████  ██████  ███    ███ ███    ███  █████  ███    ██ ██████  ███████ 
 ██      ██    ██ ████  ████ ████  ████ ██   ██ ████   ██ ██   ██ ██      
@@ -106,13 +123,12 @@ function deal() {
  ██████  ██████  ██      ██ ██      ██ ██   ██ ██   ████ ██████  ███████ 
  */
 
-while (i != 0) {
+while (handSize != 0) {
     drawCard();
     deal();
-    i--;
+    handSize--;
 }
 
 console.log(hand);
 findPair();
-
-// random comment
+console.log(hand);
