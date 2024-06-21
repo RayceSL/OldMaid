@@ -69,8 +69,6 @@ let hand = [];
 let player1 = [];
 let player2 = [];
 
-let handSize = 7;
-
 /* 
 ███████ ██    ██ ███    ██  ██████ ████████ ██  ██████  ███    ██ ███████ 
 ██      ██    ██ ████   ██ ██         ██    ██ ██    ██ ████   ██ ██      
@@ -88,30 +86,39 @@ function swapCard(array, indexA, indexB) {
 
 function drawCard() {
     let randIndex = (Math.floor(Math.random() * deck.length));
-    let randCard = deck[randIndex];
-    console.log(`Drew the ${randCard["name"]}.`);
+/*     let randCard = deck[randIndex];
+    console.log(`Drew the ${randCard["name"]}.`); */
     swapCard(deck, randIndex, 0);
 }
 
-function deal() {
-    hand.unshift(deck[0]);
+function deal(player) {
+    player.unshift(deck[0]);
     deck.shift();
 }
 
-function findPair() {
-    hand.sort((a,b) => a.rank - b.rank);
+function findPairs(player) {
+    player.sort((a,b) => a.rank - b.rank);
     let i = 0
-    while(i < hand.length - 1) {
-        if (hand[0].rank == hand[1].rank) {
-            hand.shift();
-            hand.shift();
-            console.log(hand);
+    while(i < 51) {
+        if (player[0].rank == player[1].rank) {
+            player.shift();
+            player.shift();
         } else {
-            hand.push(hand[0]);
-            hand.shift();
-            console.log(hand);
+            player.push(player[0]);
+            player.shift();
+            i++;
         }
-        i++;
+    }
+}
+
+function startGame() {
+    while (deck.length > 0) {
+        drawCard();
+        deal(hand);
+        drawCard();
+        deal(player1);
+        drawCard();
+        deal(player2);
     }
 }
 
@@ -123,12 +130,19 @@ function findPair() {
  ██████  ██████  ██      ██ ██      ██ ██   ██ ██   ████ ██████  ███████ 
  */
 
-while (handSize != 0) {
-    drawCard();
-    deal();
-    handSize--;
-}
-
+startGame();
+console.log("Your hand:");
 console.log(hand);
-findPair();
+console.log("Player 1's hand:");
+console.log(player1);
+console.log("Player 2's hand:");
+console.log(player2);
+findPairs(hand);
+findPairs(player1);
+findPairs(player2);
+console.log("Your hand:");
 console.log(hand);
+console.log("Player 1's hand:");
+console.log(player1);
+console.log("Player 2's hand:");
+console.log(player2);
