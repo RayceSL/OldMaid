@@ -86,7 +86,7 @@ function swapCard(array, indexA, indexB) {
 function deal(fromPlayer, toPlayer) {
     let randIndex = (Math.floor(Math.random() * fromPlayer.length));
     swapCard(fromPlayer, randIndex, 0);
-    toPlayer.unshift(deck[0]);
+    toPlayer.unshift(fromPlayer[0]);
     fromPlayer.shift();
 }
 
@@ -115,21 +115,21 @@ function findPairs(player) {
 let cardCount = 51;
 
 while (cardCount > 0) {
-    console.log(`Card count: ${cardCount}.`)
+    // console.log(`Card count: ${cardCount}.`)
 
     deal(deck, hand);
 /*     console.log("Your hand:");
     console.log(hand); */
     cardCount--
 
-    console.log(`Card count: ${cardCount}.`)
+    // console.log(`Card count: ${cardCount}.`)
 
     deal(deck, player1);
 /*     console.log("Player 1's hand:");
     console.log(player1); */
     cardCount--
 
-    console.log(`Card count: ${cardCount}.`)
+    // console.log(`Card count: ${cardCount}.`)
 
     deal(deck, player2);
 /*     console.log("Player 2's hand:");
@@ -146,9 +146,11 @@ while (cardCount > 0) {
 findPairs(hand);
 console.log("Your hand:");
 console.log(hand);
+
 findPairs(player1);
 console.log("Player 1's hand:");
 console.log(player1);
+
 findPairs(player2);
 console.log("Player 2's hand:");
 console.log(player2);
@@ -159,3 +161,61 @@ console.log(player2);
    ██    ██   ██ ██          ██      ██      ██   ██    ██    
    ██    ██   ██ ███████     ██      ███████ ██   ██    ██    
  */
+let turn = 1;
+/* 
+ ██████  ██    ██ ██████      ████████ ██    ██ ██████  ███    ██ 
+██    ██ ██    ██ ██   ██        ██    ██    ██ ██   ██ ████   ██ 
+██    ██ ██    ██ ██████         ██    ██    ██ ██████  ██ ██  ██ 
+██    ██ ██    ██ ██   ██        ██    ██    ██ ██   ██ ██  ██ ██ 
+ ██████   ██████  ██   ██        ██     ██████  ██   ██ ██   ████ 
+ */
+console.log(`Turn: ${turn}.`)
+console.log("Taking a card from Player 2... ")
+deal(player2, hand);
+console.log(hand);
+
+console.log("Finding pairs... ")
+findPairs(hand);
+
+console.log("Your hand:");
+console.log(hand);
+
+turn++;
+/* 
+██████   ██ ██ ███████     ████████ ██    ██ ██████  ███    ██ 
+██   ██ ███ ██ ██             ██    ██    ██ ██   ██ ████   ██ 
+██████   ██ █  ███████        ██    ██    ██ ██████  ██ ██  ██ 
+██       ██         ██        ██    ██    ██ ██   ██ ██  ██ ██ 
+██       ██    ███████        ██     ██████  ██   ██ ██   ████ 
+ */
+console.log(`Turn: ${turn}.`)
+console.log("Player 1 takes a card from you... ")
+deal(player2, hand);
+console.log(hand);
+
+console.log("Finding pairs... ")
+findPairs(hand);
+
+console.log("Player 1's hand:");
+console.log(hand);
+
+turn++;
+/* 
+██████  ██████  ██ ███████     ████████ ██    ██ ██████  ███    ██ 
+██   ██      ██ ██ ██             ██    ██    ██ ██   ██ ████   ██ 
+██████   █████  █  ███████        ██    ██    ██ ██████  ██ ██  ██ 
+██      ██              ██        ██    ██    ██ ██   ██ ██  ██ ██ 
+██      ███████    ███████        ██     ██████  ██   ██ ██   ████ 
+ */
+console.log(`Turn: ${turn}.`)
+console.log("Player 2 takes a card from Player 1... ")
+deal(player2, hand);
+console.log(hand);
+
+console.log("Finding pairs... ")
+findPairs(hand);
+
+console.log("Player 2's hand:");
+console.log(hand);
+
+turn++;
