@@ -1,0 +1,58 @@
+#PLAYER# #PREVPLAYER# #NEXTPLAYER#
+
+function #PLAYER#Turn() {
+    console.log(`Turn: ${turn}.`);
+    console.log("#PLAYER#'s hand:");
+    console.log(#PLAYER#);
+
+    if (triggerEnd == 2) {
+        console.log("The game has ended already, #PLAYER#!");
+        endGame();
+
+    } else if (#PREVPLAYER#.length == 1) {
+        deal(#PREVPLAYER#, #PLAYER#);
+        console.log("#PLAYER# took #PREVPLAYER#'s last card!");
+        triggerEnd++;
+        console.log(`Countdown to endgame: ${2 - triggerEnd}.`);
+
+        if (#PLAYER#.length > 2) {
+            findPairs(#PLAYER#);
+            console.log("#PLAYER# pairs up their cards... ");
+            console.log(#PLAYER#);
+            console.log("#PLAYER# passes the game to #NEXTPLAYER#... ");
+            turn++;
+            #NEXTPLAYER#Turn();
+
+        } else if (#PLAYER#.length < 2) {
+            console.log("#PLAYER# only has one card; no pairs are possible!\n#PLAYER# passes the game to #NEXTPLAYER#... ");
+            turn++;
+            #NEXTPLAYER#Turn();
+        }
+
+    } else if (#PREVPLAYER#.length > 1) {
+        deal(#PREVPLAYER#, #PLAYER#);
+        console.log("#PLAYER# took a card from #PREVPLAYER#'s hand... ");
+
+        if (#PLAYER#.length > 2) {
+            findPairs(#PLAYER#);
+            console.log("#PLAYER# pairs up their cards... ");
+            console.log(#PLAYER#);
+            turn++;
+            console.log("#PLAYER# passes the game to #NEXTPLAYER#... ");
+            #NEXTPLAYER#Turn();
+
+        } else if (#PLAYER#.length < 2) {
+            console.log("#PLAYER# only has one card; no pairs are possible!\n#PLAYER# passes the game to #NEXTPLAYER#... ");
+            turn++;
+            #NEXTPLAYER#Turn();
+        }
+
+    } else if (#PREVPLAYER#.length <1) {
+        console.log("#PREVPLAYER# has no cards to take!?\nEnding the game!");
+        endGame();
+
+    } else {
+        console.log("Something really weird happened... \nEnding the game now!");
+        endGame();
+    }
+}

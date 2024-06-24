@@ -114,27 +114,15 @@ function findPairs(player) {
  */
 let cardCount = 51;
 
+console.log("Let's \"play\" Old Maid!\nDealing cards...");
+
 while (cardCount > 0) {
-    // console.log(`Card count: ${cardCount}.`)
-
     deal(deck, hand);
-/*     console.log("Your hand:");
-    console.log(hand); */
-    cardCount--
-
-    // console.log(`Card count: ${cardCount}.`)
-
+    cardCount--;
     deal(deck, player1);
-/*     console.log("Player 1's hand:");
-    console.log(player1); */
-    cardCount--
-
-    // console.log(`Card count: ${cardCount}.`)
-
+    cardCount--;
     deal(deck, player2);
-/*     console.log("Player 2's hand:");
-    console.log(player2); */
-    cardCount--
+    cardCount--;
 }
 /* 
 ██████   █████  ███████ ███████ 
@@ -160,62 +148,67 @@ console.log(player2);
    ██    ███████ █████       ██████  ██      ███████   ████   
    ██    ██   ██ ██          ██      ██      ██   ██    ██    
    ██    ██   ██ ███████     ██      ███████ ██   ██    ██    
+ 
+Turn structure: (0) Make sure it's not the end of the game.          #
+(1) Check to see if you're taking a player's last card, and if so,
+increment the endTrigger. (2) Take a card. (3) If you have more than
+two cards, attempt to match pairs. (4) Increment turn. (5) Pass to the
+next player.
  */
+
 let turn = 1;
+let triggerEnd = 0;
+
 /* 
- ██████  ██    ██ ██████      ████████ ██    ██ ██████  ███    ██ 
-██    ██ ██    ██ ██   ██        ██    ██    ██ ██   ██ ████   ██ 
-██    ██ ██    ██ ██████         ██    ██    ██ ██████  ██ ██  ██ 
-██    ██ ██    ██ ██   ██        ██    ██    ██ ██   ██ ██  ██ ██ 
- ██████   ██████  ██   ██        ██     ██████  ██   ██ ██   ████ 
+██    ██  ██████  ██    ██ ██████      ████████ ██    ██ ██████  ███    ██ 
+ ██  ██  ██    ██ ██    ██ ██   ██        ██    ██    ██ ██   ██ ████   ██ 
+  ████   ██    ██ ██    ██ ██████         ██    ██    ██ ██████  ██ ██  ██ 
+   ██    ██    ██ ██    ██ ██   ██        ██    ██    ██ ██   ██ ██  ██ ██ 
+   ██     ██████   ██████  ██   ██        ██     ██████  ██   ██ ██   ████ 
  */
-console.log(`Turn: ${turn}.`)
-console.log("Taking a card from Player 2... ")
-deal(player2, hand);
-console.log(hand);
 
-console.log("Finding pairs... ")
-findPairs(hand);
-
-console.log("Your hand:");
-console.log(hand);
-
-turn++;
 /* 
-██████   ██ ██ ███████     ████████ ██    ██ ██████  ███    ██ 
-██   ██ ███ ██ ██             ██    ██    ██ ██   ██ ████   ██ 
-██████   ██ █  ███████        ██    ██    ██ ██████  ██ ██  ██ 
-██       ██         ██        ██    ██    ██ ██   ██ ██  ██ ██ 
-██       ██    ███████        ██     ██████  ██   ██ ██   ████ 
+██████   ██     ████████ ██    ██ ██████  ███    ██ 
+██   ██ ███        ██    ██    ██ ██   ██ ████   ██ 
+██████   ██        ██    ██    ██ ██████  ██ ██  ██ 
+██       ██        ██    ██    ██ ██   ██ ██  ██ ██ 
+██       ██        ██     ██████  ██   ██ ██   ████ 
  */
-console.log(`Turn: ${turn}.`)
-console.log("Player 1 takes a card from you... ")
-deal(player2, hand);
-console.log(hand);
 
-console.log("Finding pairs... ")
-findPairs(hand);
-
-console.log("Player 1's hand:");
-console.log(hand);
-
-turn++;
 /* 
-██████  ██████  ██ ███████     ████████ ██    ██ ██████  ███    ██ 
-██   ██      ██ ██ ██             ██    ██    ██ ██   ██ ████   ██ 
-██████   █████  █  ███████        ██    ██    ██ ██████  ██ ██  ██ 
-██      ██              ██        ██    ██    ██ ██   ██ ██  ██ ██ 
-██      ███████    ███████        ██     ██████  ██   ██ ██   ████ 
+██████  ██████      ████████ ██    ██ ██████  ███    ██ 
+██   ██      ██        ██    ██    ██ ██   ██ ████   ██ 
+██████   █████         ██    ██    ██ ██████  ██ ██  ██ 
+██      ██             ██    ██    ██ ██   ██ ██  ██ ██ 
+██      ███████        ██     ██████  ██   ██ ██   ████ 
  */
-console.log(`Turn: ${turn}.`)
-console.log("Player 2 takes a card from Player 1... ")
-deal(player2, hand);
-console.log(hand);
 
-console.log("Finding pairs... ")
-findPairs(hand);
+/* 
+███████ ████████  █████  ██████  ████████      ██████   █████  ███    ███ ███████ 
+██         ██    ██   ██ ██   ██    ██        ██       ██   ██ ████  ████ ██      
+███████    ██    ███████ ██████     ██        ██   ███ ███████ ██ ████ ██ █████   
+     ██    ██    ██   ██ ██   ██    ██        ██    ██ ██   ██ ██  ██  ██ ██      
+███████    ██    ██   ██ ██   ██    ██         ██████  ██   ██ ██      ██ ███████ 
+ */
+handTurn();
+/* 
+███████ ███    ██ ██████  
+██      ████   ██ ██   ██ 
+█████   ██ ██  ██ ██   ██ 
+██      ██  ██ ██ ██   ██ 
+███████ ██   ████ ██████  
+ */
+function endGame() {
+    console.log("Game ended!")
 
-console.log("Player 2's hand:");
-console.log(hand);
+    console.log("Your hand:");
+    console.log(hand);
 
-turn++;
+    console.log("Player 1's hand:");
+    console.log(player1);
+
+    console.log("Player 2's hand:");
+    console.log(player2);
+
+    return;
+}
