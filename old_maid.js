@@ -6,6 +6,8 @@
   ████   ██   ██ ██   ██ ██ ██   ██ ██████  ███████ ███████ ███████ 
  */
 
+// removed the queen of spades
+
 let deck = [
     {"name": "A♥",  "rank": 0,  "suit": 0},
     {"name": "2♥",  "rank": 1,  "suit": 0},
@@ -60,12 +62,10 @@ let deck = [
     {"name": "9♠",  "rank": 8,  "suit": 3},
     {"name": "10♠", "rank": 9,  "suit": 3},
     {"name": "J♠",  "rank": 10, "suit": 3},
-    // {"name": "Q♠",  "rank": 11, "suit": 3},
     {"name": "K♠",  "rank": 12, "suit": 3}
 ]
 
-// Note: Players should be in a 2D array?
-let hand = [];
+let player0 = [];
 let player1 = [];
 let player2 = [];
 
@@ -84,22 +84,17 @@ function swapCard(array, indexA, indexB) {
     array[indexB] = tmp;
 }
 
-function drawCard() {
-    let randIndex = (Math.floor(Math.random() * deck.length));
-/*     let randCard = deck[randIndex];
-    console.log(`Drew the ${randCard["name"]}.`); */
-    swapCard(deck, randIndex, 0);
-}
-
-function deal(player) {
-    player.unshift(deck[0]);
-    deck.shift();
+function deal(fromPlayer, toPlayer) {
+    let randIndex = (Math.floor(Math.random() * fromPlayer.length));
+    swapCard(fromPlayer, randIndex, 0);
+    toPlayer.unshift(fromPlayer[0]);
+    fromPlayer.shift();
 }
 
 function findPairs(player) {
     player.sort((a,b) => a.rank - b.rank);
     let i = 0
-    while(i < 51) {
+    while(i < 51 && player.length >= 2) {
         if (player[0].rank == player[1].rank) {
             player.shift();
             player.shift();
@@ -111,38 +106,288 @@ function findPairs(player) {
     }
 }
 
-function startGame() {
-    while (deck.length > 0) {
-        drawCard();
-        deal(hand);
-        drawCard();
-        deal(player1);
-        drawCard();
-        deal(player2);
-    }
-}
-
 /* 
- ██████  ██████  ███    ███ ███    ███  █████  ███    ██ ██████  ███████ 
-██      ██    ██ ████  ████ ████  ████ ██   ██ ████   ██ ██   ██ ██      
-██      ██    ██ ██ ████ ██ ██ ████ ██ ███████ ██ ██  ██ ██   ██ ███████ 
-██      ██    ██ ██  ██  ██ ██  ██  ██ ██   ██ ██  ██ ██ ██   ██      ██ 
- ██████  ██████  ██      ██ ██      ██ ██   ██ ██   ████ ██████  ███████ 
+████████ ██   ██ ███████     ██████  ███████  █████  ██      
+   ██    ██   ██ ██          ██   ██ ██      ██   ██ ██      
+   ██    ███████ █████       ██   ██ █████   ███████ ██      
+   ██    ██   ██ ██          ██   ██ ██      ██   ██ ██      
+   ██    ██   ██ ███████     ██████  ███████ ██   ██ ███████ 
+ */
+let cardCount = 51;
+
+console.log("Let's \"play\" Old Maid!\nDealing cards...");
+
+while (cardCount > 0) {
+    deal(deck, player0);
+    cardCount--;
+    deal(deck, player1);
+    cardCount--;
+    deal(deck, player2);
+    cardCount--;
+}
+/* 
+██████   █████  ███████ ███████ 
+██   ██ ██   ██    ███  ██      
+██████  ███████   ███   █████   
+██   ██ ██   ██  ███    ██      
+██   ██ ██   ██ ███████ ███████ 
+ */
+findPairs(player0);
+
+findPairs(player1);
+
+findPairs(player2);
+/* 
+████████ ██   ██ ███████     ██████  ██       █████  ██    ██ 
+   ██    ██   ██ ██          ██   ██ ██      ██   ██  ██  ██  
+   ██    ███████ █████       ██████  ██      ███████   ████   
+   ██    ██   ██ ██          ██      ██      ██   ██    ██    
+   ██    ██   ██ ███████     ██      ███████ ██   ██    ██    
  */
 
-startGame();
-console.log("Your hand:");
-console.log(hand);
-console.log("Player 1's hand:");
-console.log(player1);
-console.log("Player 2's hand:");
-console.log(player2);
-findPairs(hand);
-findPairs(player1);
-findPairs(player2);
-console.log("Your hand:");
-console.log(hand);
-console.log("Player 1's hand:");
-console.log(player1);
-console.log("Player 2's hand:");
-console.log(player2);
+let turnCount = 1;
+
+/* 
+██    ██  ██████  ██    ██ ██████      ████████ ██    ██ ██████  ███    ██ 
+ ██  ██  ██    ██ ██    ██ ██   ██        ██    ██    ██ ██   ██ ████   ██ 
+  ████   ██    ██ ██    ██ ██████         ██    ██    ██ ██████  ██ ██  ██ 
+   ██    ██    ██ ██    ██ ██   ██        ██    ██    ██ ██   ██ ██  ██ ██ 
+   ██     ██████   ██████  ██   ██        ██     ██████  ██   ██ ██   ████ 
+ */
+   function player0Turn() {
+    console.log(`\n██████\n\nTurn: ${turnCount}.`);
+    console.log("Your hand:");
+    console.log(player0);
+    console.log("Player1's hand:");
+    console.log(player1);
+    console.log("Player2's hand:");
+    console.log(player2);
+
+    if (player0.length + player1.length + player2.length == 1) {
+        console.log("The other players have no cards!");
+        endGame();
+    } else if (player2.length == 0) {
+        console.log("Player2 has no cards!\nYou must take from Player1 instead...");
+        deal(player1, player0);
+        console.log(`Took the: ${player0[0].name}`);
+        console.log("Player0's hand:");
+        console.log(player0);
+
+        if (player0.length >= 2) {
+            console.log("You pair up your cards...");
+            findPairs(player0);
+            console.log("Your hand:");
+            console.log(player0);
+            turnCount++;
+            console.log("You pass the game to Player1...");
+            player1Turn();
+
+        } else {
+            console.log("You only have one card, there's no need to check for pairs.");
+            console.log("Your hand:");
+            console.log(player0);
+            turnCount++;
+            console.log("You passes the game to Player1...");
+            player1Turn();
+        }
+    } else {
+        console.log("You take a card from Player2... ");
+        deal(player2, player0);
+        console.log(`Took the: ${player0[0].name}`);
+        console.log("Your hand:");
+        console.log(player0);
+
+        if (player0.length >= 2) {
+            console.log("You pair up your cards...");
+            findPairs(player0);
+            console.log("Your hand:");
+            console.log(player0);
+            turnCount++;
+            console.log("You pass the game to Player1...");
+            player1Turn();
+
+        } else {
+            console.log("You only have one card, there's no need to check for pairs.");
+            console.log("Your hand:");
+            console.log(player0);
+            turnCount++;
+            console.log("You pass the game to Player1...");
+            player1Turn();
+        }
+    }
+}
+/* 
+██████   ██     ████████ ██    ██ ██████  ███    ██ 
+██   ██ ███        ██    ██    ██ ██   ██ ████   ██ 
+██████   ██        ██    ██    ██ ██████  ██ ██  ██ 
+██       ██        ██    ██    ██ ██   ██ ██  ██ ██ 
+██       ██        ██     ██████  ██   ██ ██   ████ 
+ */
+function player1Turn() {
+    console.log(`\n██████\n\nTurn: ${turnCount}.`);
+    console.log("Player1's hand:");
+    console.log(player1);
+    console.log("Player2's hand:");
+    console.log(player2);
+    console.log("Your hand:");
+    console.log(player0);
+
+    if (player1.length + player2.length + player0.length == 1) {
+        console.log("The other Players have no cards!");
+        endGame();
+    } else if (player0.length == 0) {
+        console.log("You have no cards!\nPlayer1 must take from Player2 instead...");
+        deal(player2, player1);
+        console.log(`Took the: ${player1[0].name}`);
+        console.log("Player1's hand:");
+        console.log(player1);
+
+        if (player1.length >= 2) {
+            console.log("Player1 pairs up their cards...");
+            findPairs(player1);
+            console.log("Player1's hand:");
+            console.log(player1);
+            turnCount++;
+            console.log("Player1 passes the game to Player2...");
+            player2Turn();
+
+        } else {
+            console.log("Player1 only has one card, there's no need to check for pairs.");
+            console.log("Player1's hand:");
+            console.log(player1);
+            turnCount++;
+            console.log("Player1 passes the game to Player2...");
+            player2Turn();
+        }
+    } else {
+        console.log("Player1 takes a card from Player0... ");
+        deal(player0, player1);
+        console.log(`Took the: ${player1[0].name}`);
+        console.log("Player1's hand:");
+        console.log(player1);
+
+        if (player1.length >= 2) {
+            console.log("Player1 pairs up their cards...");
+            findPairs(player1);
+            console.log("Player1's hand:");
+            console.log(player1);
+            turnCount++;
+            console.log("Player1 passes the game to Player2...");
+            player2Turn();
+
+        } else {
+            console.log("Player1 only has one card, there's no need to check for pairs.");
+            console.log("Player1's hand:");
+            console.log(player1);
+            turnCount++;
+            console.log("Player1 passes the game to Player2...");
+            player2Turn();
+        }
+    }
+}
+/* 
+██████  ██████      ████████ ██    ██ ██████  ███    ██ 
+██   ██      ██        ██    ██    ██ ██   ██ ████   ██ 
+██████   █████         ██    ██    ██ ██████  ██ ██  ██ 
+██      ██             ██    ██    ██ ██   ██ ██  ██ ██ 
+██      ███████        ██     ██████  ██   ██ ██   ████ 
+ */
+function player2Turn() {
+    console.log(`\n██████\n\nTurn: ${turnCount}.`);
+    console.log("Player2's hand:");
+    console.log(player2);
+    console.log("Your hand:");
+    console.log(player0);
+    console.log("Player1's hand:");
+    console.log(player1);
+
+    if (player2.length + player0.length + player1.length == 1) {
+        console.log("The other players have no cards!");
+        endGame();
+    } else if (player1.length == 0) {
+        console.log("Player1 has no cards!\nPlayer2 must take from you instead...");
+        deal(player0, player2);
+        console.log(`Took the: ${player2[0].name}`);
+        console.log("Player2's hand:");
+        console.log(player2);
+
+        if (player2.length >= 2) {
+            console.log("Player2 pairs up their cards...");
+            findPairs(player2);
+            console.log("Player2's hand:");
+            console.log(player2);
+            turnCount++;
+            console.log("Player2 passes the game to you...");
+            player0Turn();
+
+        } else {
+            console.log("Player2 only has one card, there's no need to check for pairs.");
+            console.log("Player2's hand:");
+            console.log(player2);
+            turnCount++;
+            console.log("Player2 passes the game to you...");
+            player0Turn();
+        }
+    } else {
+        console.log("Player2 takes a card from Player1... ");
+        deal(player1, player2);
+        console.log(`Took the: ${player2[0].name}`);
+        console.log("Player2's hand:");
+        console.log(player2);
+
+        if (player2.length >= 2) {
+            console.log("Player2 pairs up their cards...");
+            findPairs(player2);
+            console.log("Player2's hand:");
+            console.log(player2);
+            turnCount++;
+            console.log("Player2 passes the game to you...");
+            player0Turn();
+
+        } else {
+            console.log("player2 only has one card, there's no need to check for pairs.");
+            console.log("player2's hand:");
+            console.log(player2);
+            turnCount++;
+            console.log("player2 passes the game to player0...");
+            player0Turn();
+        }
+    }
+}
+/* 
+███████ ████████  █████  ██████  ████████      ██████   █████  ███    ███ ███████ 
+██         ██    ██   ██ ██   ██    ██        ██       ██   ██ ████  ████ ██      
+███████    ██    ███████ ██████     ██        ██   ███ ███████ ██ ████ ██ █████   
+     ██    ██    ██   ██ ██   ██    ██        ██    ██ ██   ██ ██  ██  ██ ██      
+███████    ██    ██   ██ ██   ██    ██         ██████  ██   ██ ██      ██ ███████ 
+ */
+player0Turn();
+/* 
+███████ ███    ██ ██████  
+██      ████   ██ ██   ██ 
+█████   ██ ██  ██ ██   ██ 
+██      ██  ██ ██ ██   ██ 
+███████ ██   ████ ██████  
+ */
+function endGame() {
+    console.log("\n██████\n\nGame ended!")
+
+    console.log("Your hand:");
+    console.log(player0);
+
+    console.log("Player1's hand:");
+    console.log(player1);
+
+    console.log("Player2's hand:");
+    console.log(player2);
+
+    if (player0.length == 1) {
+        console.log("\n██████\n\nYou lose!");
+    } else if (player1.length == 1) {
+        console.log("\n██████\n\nPlayer1 loses!");
+    } else {
+        console.log("\n██████\n\nPlayer2 loses!");
+    }
+
+    return;
+}
