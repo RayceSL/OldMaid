@@ -1,16 +1,12 @@
-Check if the game timer has gone off
+Check if the other players have cards
 
-If the game timer is up, end the game
-
-Check to see if you're taking a player's last card.
+If not, end the game
 
 Take a card.
 
 Check if you have more than one card
 
 If you have more than one card, attempt to match pairs.
-
-If you took someone's last card, increment triggerEnd.
 
 Increment turn.
 
@@ -21,42 +17,21 @@ Pass to the next player.
 function #PLAYER#Turn() {
     console.log(`Turn: ${turnCount}.`);
 
-    if (triggerEnd >=2) {
-        console.log(`End trigger: ${triggerEnd}.`);
+    if (#PREVPLAYER#.length == 0 && #NEXTPLAYER#.length == 0) {
+        console.log("The other players have no cards!");
         endGame();
 
-    } else if (#PREVPLAYER#.length == 1) {
-        console.log(#PREVPLAYER#);
-        console.log("#PLAYER# takes #PREVPLAYER#'s last card!");
-        deal(#PREVPLAYER#, #PLAYER#);
-        console.log(`Took the: ${#PLAYER#[0]}`);
-
-        if (#PLAYER#.length >= 2) {
-            console.log("#PLAYER# pairs up their cards...");
-            findPairs(#PLAYER#);
-            triggerEnd++;
-            turnCount++;
-            console.log("#PLAYER# passes the game to #NEXTPLAYER#...")
-            #NEXTPLAYER#Turn();
-
-        } else {
-            console.log("#PLAYER# only has one card, there's no need to check for pairs.");
-            triggerEnd++;
-            turnCount++;
-            console.log("#PLAYER# passes the game to #NEXTPLAYER#...")
-            #NEXTPLAYER#Turn();
-        }
     } else {
         console.log(#PREVPLAYER#);
         console.log("#PLAYER# takes a card from #PREVPLAYER#... ");
         deal(#PREVPLAYER#, #PLAYER#);
-        console.log(`Took the: ${#PLAYER#[0]}`);
+        console.log(`Took the: ${#PLAYER#[0].name}`);
 
         if (#PLAYER#.length >= 2) {
             console.log("#PLAYER# pairs up their cards...");
             findPairs(#PLAYER#);
             turnCount++;
-            console.log("#PLAYER# passes the game to #NEXTPLAYER#...")
+            console.log("#PLAYER# passes the game to #NEXTPLAYER#...");
             #NEXTPLAYER#Turn();
 
         } else {
