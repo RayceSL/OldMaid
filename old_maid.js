@@ -148,12 +148,6 @@ console.log(player2);
    ██    ███████ █████       ██████  ██      ███████   ████   
    ██    ██   ██ ██          ██      ██      ██   ██    ██    
    ██    ██   ██ ███████     ██      ███████ ██   ██    ██    
- 
-Turn structure: (0) Make sure it's not the end of the game.          #
-(1) Check to see if you're taking a player's last card, and if so,
-increment the endTrigger. (2) Take a card. (3) If you have more than
-two cards, attempt to match pairs. (4) Increment turn. (5) Pass to the
-next player.
  */
 
 let turn = 1;
