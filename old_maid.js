@@ -64,7 +64,6 @@ let deck = [
     {"name": "K♠",  "rank": 12, "suit": 3}
 ]
 
-// Note: Players should be in a 2D array?
 let hand = [];
 let player1 = [];
 let player2 = [];
@@ -84,16 +83,11 @@ function swapCard(array, indexA, indexB) {
     array[indexB] = tmp;
 }
 
-function drawCard() {
-    let randIndex = (Math.floor(Math.random() * deck.length));
-/*     let randCard = deck[randIndex];
-    console.log(`Drew the ${randCard["name"]}.`); */
-    swapCard(deck, randIndex, 0);
-}
-
-function deal(player) {
-    player.unshift(deck[0]);
-    deck.shift();
+function deal(fromPlayer, toPlayer) {
+    let randIndex = (Math.floor(Math.random() * fromPlayer.length));
+    swapCard(fromPlayer, randIndex, 0);
+    toPlayer.unshift(deck[0]);
+    fromPlayer.shift();
 }
 
 function findPairs(player) {
@@ -112,14 +106,19 @@ function findPairs(player) {
 }
 
 function startGame() {
-    while (deck.length > 0) {
-        drawCard();
-        deal(hand);
-        drawCard();
-        deal(player1);
-        drawCard();
-        deal(player2);
+    if (deck.length > 3) {
+        deal(deck, hand);
+        deal(deck, player1);
+        deal(deck, player2);
+    } else if (deck.length > 2) {
+        deal(deck, hand);
+        deal(deck, player1);
+    } else if (deck.length > 1) {
+        deal(deck, hand);
+    } else {
+        return;
     }
+    startGame();
 }
 
 /* 
@@ -132,17 +131,55 @@ function startGame() {
 
 startGame();
 console.log("Your hand:");
-console.log(hand);
-console.log("Player 1's hand:");
-console.log(player1);
-console.log("Player 2's hand:");
-console.log(player2);
+console.log(hand)
+console.log("P1 hand:");
+console.log(player1)
+console.log("P2 hand:");
+console.log(player2)
 findPairs(hand);
 findPairs(player1);
 findPairs(player2);
+
+let turn = 0;
+while (turn < 17) {
+    handsTurn();
+    function handsTurn() {
+        if (player1.length > 0) {
+            deal(player1, hand);
+            findPairs(hand);
+            console.log("You took your turn!");
+            console.log(hand);
+            turn++
+            p1sTurn();
+        }
+    }
+
+    function p1sTurn() {
+        if (player2.length > 0) {
+            deal(player2, player1);
+            findPairs(player1);
+            console.log("Player 1 took their turn!");
+            console.log(player1);
+            turn++
+            p2sTurn();
+        }
+    }
+
+    function p2sTurn() {
+        if (hand.length > 0) {
+            deal(hand, player2);
+            findPairs(player2);
+            console.log("Player 2 took their turn!");
+            console.log(player2);
+            turn++
+            handsTurn();
+        }
+    }
+}
+
 console.log("Your hand:");
-console.log(hand);
-console.log("Player 1's hand:");
-console.log(player1);
-console.log("Player 2's hand:");
-console.log(player2);
+console.log(hand)
+console.log("P1 hand:");
+console.log(player1)
+console.log("P2 hand:");
+console.log(player2)
