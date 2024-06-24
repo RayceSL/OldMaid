@@ -105,81 +105,57 @@ function findPairs(player) {
     }
 }
 
-function startGame() {
-    if (deck.length > 3) {
-        deal(deck, hand);
-        deal(deck, player1);
-        deal(deck, player2);
-    } else if (deck.length > 2) {
-        deal(deck, hand);
-        deal(deck, player1);
-    } else if (deck.length > 1) {
-        deal(deck, hand);
-    } else {
-        return;
-    }
-    startGame();
-}
-
 /* 
- ██████  ██████  ███    ███ ███    ███  █████  ███    ██ ██████  ███████ 
-██      ██    ██ ████  ████ ████  ████ ██   ██ ████   ██ ██   ██ ██      
-██      ██    ██ ██ ████ ██ ██ ████ ██ ███████ ██ ██  ██ ██   ██ ███████ 
-██      ██    ██ ██  ██  ██ ██  ██  ██ ██   ██ ██  ██ ██ ██   ██      ██ 
- ██████  ██████  ██      ██ ██      ██ ██   ██ ██   ████ ██████  ███████ 
+████████ ██   ██ ███████     ██████  ███████  █████  ██      
+   ██    ██   ██ ██          ██   ██ ██      ██   ██ ██      
+   ██    ███████ █████       ██   ██ █████   ███████ ██      
+   ██    ██   ██ ██          ██   ██ ██      ██   ██ ██      
+   ██    ██   ██ ███████     ██████  ███████ ██   ██ ███████ 
  */
+let cardCount = 51;
 
-startGame();
-console.log("Your hand:");
-console.log(hand)
-console.log("P1 hand:");
-console.log(player1)
-console.log("P2 hand:");
-console.log(player2)
-findPairs(hand);
-findPairs(player1);
-findPairs(player2);
+while (cardCount > 0) {
+    console.log(`Card count: ${cardCount}.`)
 
-let turn = 0;
-while (turn < 17) {
-    handsTurn();
-    function handsTurn() {
-        if (player1.length > 0) {
-            deal(player1, hand);
-            findPairs(hand);
-            console.log("You took your turn!");
-            console.log(hand);
-            turn++
-            p1sTurn();
-        }
-    }
+    deal(deck, hand);
+/*     console.log("Your hand:");
+    console.log(hand); */
+    cardCount--
 
-    function p1sTurn() {
-        if (player2.length > 0) {
-            deal(player2, player1);
-            findPairs(player1);
-            console.log("Player 1 took their turn!");
-            console.log(player1);
-            turn++
-            p2sTurn();
-        }
-    }
+    console.log(`Card count: ${cardCount}.`)
 
-    function p2sTurn() {
-        if (hand.length > 0) {
-            deal(hand, player2);
-            findPairs(player2);
-            console.log("Player 2 took their turn!");
-            console.log(player2);
-            turn++
-            handsTurn();
-        }
-    }
+    deal(deck, player1);
+/*     console.log("Player 1's hand:");
+    console.log(player1); */
+    cardCount--
+
+    console.log(`Card count: ${cardCount}.`)
+
+    deal(deck, player2);
+/*     console.log("Player 2's hand:");
+    console.log(player2); */
+    cardCount--
 }
-
+/* 
+██████   █████  ███████ ███████ 
+██   ██ ██   ██    ███  ██      
+██████  ███████   ███   █████   
+██   ██ ██   ██  ███    ██      
+██   ██ ██   ██ ███████ ███████ 
+ */
+findPairs(hand);
 console.log("Your hand:");
-console.log(hand)
-console.log("P1 hand:");
-console.log(player1)
-console.log("P2 hand:");
-console.log(player2)
+console.log(hand);
+findPairs(player1);
+console.log("Player 1's hand:");
+console.log(player1);
+findPairs(player2);
+console.log("Player 2's hand:");
+console.log(player2);
+/* 
+████████ ██   ██ ███████     ██████  ██       █████  ██    ██ 
+   ██    ██   ██ ██          ██   ██ ██      ██   ██  ██  ██  
+   ██    ███████ █████       ██████  ██      ███████   ████   
+   ██    ██   ██ ██          ██      ██      ██   ██    ██    
+   ██    ██   ██ ███████     ██      ███████ ██   ██    ██    
+ */
