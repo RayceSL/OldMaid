@@ -1,13 +1,5 @@
 let hand = [
-    { name: '10♣', rank: 9, suit: 2 },
-    { name: 'J♦', rank: 10, suit: 1 },
-    { name: '6♣', rank: 5, suit: 2 },
-    { name: 'A♥', rank: 0, suit: 0 },
-    { name: '4♣', rank: 3, suit: 2 },
-    { name: '5♦', rank: 4, suit: 1 },
-    { name: '6♦', rank: 5, suit: 1 },
-    { name: '7♦', rank: 6, suit: 1 },
-    { name: '9♣', rank: 8, suit: 2 }
+    { name: '10♣', rank: 9, suit: 2 }
 ];
 
 function findPairs(player) {
@@ -25,6 +17,7 @@ function findPairs(player) {
     }
 }
 
+console.log(hand.length);
 console.log(hand);
 findPairs(hand);
 console.log(hand);

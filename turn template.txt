@@ -1,72 +1,69 @@
-Turn structure: (0) Make sure it's not the end of the game.
-(1) Check to see if you're taking a player's last card. (2) Take a card. (3) If you have more than
-two cards, attempt to match pairs. (4) Increment turn. (5) Pass to the
-next player. (6) If you took someone's last card, increment triggerEnd.
+Check if the game timer has gone off
+
+If the game timer is up, end the game
+
+Check to see if you're taking a player's last card.
+
+Take a card.
+
+Check if you have more than one card
+
+If you have more than one card, attempt to match pairs.
+
+If you took someone's last card, increment triggerEnd.
+
+Increment turn.
+
+Pass to the next player.
 
 #PLAYER# #PREVPLAYER# #NEXTPLAYER#
 
 function #PLAYER#Turn() {
-    console.log(`Turn: ${turn}.`);
-    console.log("#PLAYER#'s hand:");
-    console.log(#PLAYER#);
+    console.log(`Turn: ${turnCount}.`);
 
-    if (triggerEnd == 2) {
-        console.log("The game has ended already, #PLAYER#!");
+    if (triggerEnd >=2) {
+        console.log(`End trigger: ${triggerEnd}.`);
         endGame();
-
-    } else if (triggerEnd >= 3) {
-        console.log("The game has already ended, #PLAYER#, but somehow it should've ended a while ago...\nEnding game now!");
 
     } else if (#PREVPLAYER#.length == 1) {
+        console.log(#PREVPLAYER#);
+        console.log("#PLAYER# takes #PREVPLAYER#'s last card!");
         deal(#PREVPLAYER#, #PLAYER#);
-        console.log("#PLAYER# took #PREVPLAYER#'s last card!");
+        console.log(`Took the: ${#PLAYER#[0]}`);
 
         if (#PLAYER#.length >= 2) {
+            console.log("#PLAYER# pairs up their cards...");
             findPairs(#PLAYER#);
-            console.log("#PLAYER# pairs up their cards... ");
-            console.log(#PLAYER#);
-
             triggerEnd++;
-            console.log(`Countdown to endgame: ${2 - triggerEnd}.`);
-
-            console.log("#PLAYER# passes the game to #NEXTPLAYER#... ");
-            turn++;
+            turnCount++;
+            console.log("#PLAYER# passes the game to #NEXTPLAYER#...")
             #NEXTPLAYER#Turn();
 
-        } else if (#PLAYER#.length == 1) {
-            console.log("#PLAYER# only has one card; no pairs are possible!\n#PLAYER# passes the game to #NEXTPLAYER#... ");
-
+        } else {
+            console.log("#PLAYER# only has one card, there's no need to check for pairs.");
             triggerEnd++;
-            console.log(`Countdown to endgame: ${2 - triggerEnd}.`);
-
-            turn++;
+            turnCount++;
+            console.log("#PLAYER# passes the game to #NEXTPLAYER#...")
             #NEXTPLAYER#Turn();
         }
-
-    } else if (#PREVPLAYER#.length > 1) {
-        deal(#PREVPLAYER#, #PLAYER#);
-        console.log("#PLAYER# took a card from #PREVPLAYER#'s hand... ");
-
-        if (#PLAYER#.length >= 2) {
-            findPairs(#PLAYER#);
-            console.log("#PLAYER# pairs up their cards... ");
-            console.log(#PLAYER#);
-            turn++;
-            console.log("#PLAYER# passes the game to #NEXTPLAYER#... ");
-            #NEXTPLAYER#Turn();
-
-        } else if (#PLAYER#.length == 1) {
-            console.log("#PLAYER# only has one card; no pairs are possible!\n#PLAYER# passes the game to #NEXTPLAYER#... ");
-            turn++;
-            #NEXTPLAYER#Turn();
-        }
-
-    } else if (#PREVPLAYER#.length <1) {
-        console.log("#PREVPLAYER# has no cards to take!?\nEnding the game!");
-        endGame();
-
     } else {
-        console.log("Something really weird happened... \nEnding the game now!");
-        endGame();
+        console.log(#PREVPLAYER#);
+        console.log("#PLAYER# takes a card from #PREVPLAYER#... ");
+        deal(#PREVPLAYER#, #PLAYER#);
+        console.log(`Took the: ${#PLAYER#[0]}`);
+
+        if (#PLAYER#.length >= 2) {
+            console.log("#PLAYER# pairs up their cards...");
+            findPairs(#PLAYER#);
+            turnCount++;
+            console.log("#PLAYER# passes the game to #NEXTPLAYER#...")
+            #NEXTPLAYER#Turn();
+
+        } else {
+            console.log("#PLAYER# only has one card, there's no need to check for pairs.");
+            turnCount++;
+            console.log("#PLAYER# passes the game to #NEXTPLAYER#...");
+            #NEXTPLAYER#Turn();
+        }
     }
 }
