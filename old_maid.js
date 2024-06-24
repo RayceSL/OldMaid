@@ -173,6 +173,8 @@ let triggerEnd = 0;
         console.log("The game has already ended, hand, but somehow it should've ended a while ago...\nEnding game now!");
 
     } else if (player2.length == 1) {
+        console.log("player2's hand:");
+        console.log(player2);
         deal(player2, hand);
         console.log("hand took player2's last card!");
 
@@ -199,8 +201,11 @@ let triggerEnd = 0;
         }
 
     } else if (player2.length > 1) {
+        console.log("player2's hand:");
+        console.log(player2);
+        console.log(`hand took a card from player2's hand... The ${player2[0].name}`);
         deal(player2, hand);
-        console.log("hand took a card from player2's hand... ");
+        console.log(player2);
 
         if (hand.length >= 2) {
             findPairs(hand);
@@ -217,10 +222,14 @@ let triggerEnd = 0;
         }
 
     } else if (player2.length <1) {
+        console.log("player2's hand:");
+        console.log(player2);
         console.log("player2 has no cards to take!?\nEnding the game!");
         endGame();
 
     } else {
+        console.log("player2's hand:");
+        console.log(player2);
         console.log("Something really weird happened... \nEnding the game now!");
         endGame();
     }
@@ -245,6 +254,8 @@ function player1Turn() {
         console.log("The game has already ended, player1, but somehow it should've ended a while ago...\nEnding game now!");
 
     } else if (hand.length == 1) {
+        console.log("hand's hand:");
+        console.log(hand);
         deal(hand, player1);
         console.log("player1 took hand's last card!");
 
@@ -271,8 +282,11 @@ function player1Turn() {
         }
 
     } else if (hand.length > 1) {
+        console.log("hand's hand:");
+        console.log(hand);
+        console.log(`player1 took a card from hand's hand... The ${player1[0].name} `);
         deal(hand, player1);
-        console.log("player1 took a card from hand's hand... ");
+        console.log(player1);
 
         if (player1.length >= 2) {
             findPairs(player1);
@@ -289,10 +303,14 @@ function player1Turn() {
         }
 
     } else if (hand.length <1) {
+        console.log("hand's hand:");
+        console.log(hand);
         console.log("hand has no cards to take!?\nEnding the game!");
         endGame();
 
     } else {
+        console.log("hand's hand:");
+        console.log(hand);
         console.log("Something really weird happened... \nEnding the game now!");
         endGame();
     }
@@ -317,6 +335,8 @@ function player2Turn() {
         console.log("The game has already ended, player2, but somehow it should've ended a while ago...\nEnding game now!");
 
     } else if (player1.length == 1) {
+        console.log("player1's hand:");
+        console.log(player1);
         deal(player1, player2);
         console.log("player2 took player1's last card!");
 
@@ -343,8 +363,11 @@ function player2Turn() {
         }
 
     } else if (player1.length > 1) {
+        console.log("player1's hand:");
+        console.log(player1);
+        console.log(`player2 took a card from player1's hand... the ${player1[0].name}`);
         deal(player1, player2);
-        console.log("player2 took a card from player1's hand... ");
+        console.log(player2);
 
         if (player2.length >= 2) {
             findPairs(player2);
@@ -361,10 +384,14 @@ function player2Turn() {
         }
 
     } else if (player1.length <1) {
+        console.log("player1's hand:");
+        console.log(player1);
         console.log("player1 has no cards to take!?\nEnding the game!");
         endGame();
 
     } else {
+        console.log("player1's hand:");
+        console.log(player1);
         console.log("Something really weird happened... \nEnding the game now!");
         endGame();
     }
