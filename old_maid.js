@@ -157,9 +157,12 @@ let turnCount = 1;
    function player0Turn() {
     console.log(`\n██████\n\nTurn: ${turnCount}.`);
     console.log("Your hand:");
+    
+    let displayHand = [];
     for (let k = 0; k < player0.length; k++) {
-        console.log(player0[k].name);
+        displayHand.push(player0[k].name);
     }
+    console.log(displayHand.join(", "));
 
     if (player0.length + player1.length + player2.length == 1) {
         console.log("The other players have no cards!");
@@ -169,17 +172,22 @@ let turnCount = 1;
         deal(player1, player0);
         console.log(`Took the: ${player0[0].name}`);
         console.log("Your hand:");
+    
+        displayHand = [];
         for (let k = 0; k < player0.length; k++) {
-            console.log(player0[k].name);
+            displayHand.push(player0[k].name);
         }
+        console.log(displayHand.join(", "));
 
         if (player0.length >= 2) {
             console.log("You pair up your cards...");
             findPairs(player0);
             console.log("Your hand:");
+            displayHand = [];
             for (let k = 0; k < player0.length; k++) {
-                console.log(player0[k].name);
+                displayHand.push(player0[k].name);
             }
+            console.log(displayHand.join(", "));
             turnCount++;
             console.log("You pass the game to Player1...");
             player1Turn();
@@ -187,9 +195,11 @@ let turnCount = 1;
         } else {
             console.log("You only have one card, there's no need to check for pairs.");
             console.log("Your hand:");
+            displayHand = [];
             for (let k = 0; k < player0.length; k++) {
-                console.log(player0[k].name);
+                displayHand.push(player0[k].name);
             }
+            console.log(displayHand.join(", "));
             turnCount++;
             console.log("You passes the game to Player1...");
             player1Turn();
@@ -199,17 +209,20 @@ let turnCount = 1;
         deal(player2, player0);
         console.log(`Took the: ${player0[0].name}`);
         console.log("Your hand:");
+        displayHand = [];
         for (let k = 0; k < player0.length; k++) {
-            console.log(player0[k].name);
+            displayHand.push(player0[k].name);
         }
+        console.log(displayHand.join(", "));
 
         if (player0.length >= 2) {
             console.log("You pair up your cards...");
             findPairs(player0);
-            console.log("Your hand:");
+            displayHand = [];
             for (let k = 0; k < player0.length; k++) {
-                console.log(player0[k].name);
+                displayHand.push(player0[k].name);
             }
+            console.log(displayHand.join(", "));
             turnCount++;
             console.log("You pass the game to Player1...");
             player1Turn();
@@ -217,9 +230,11 @@ let turnCount = 1;
         } else {
             console.log("You only have one card, there's no need to check for pairs.");
             console.log("Your hand:");
+            displayHand = [];
             for (let k = 0; k < player0.length; k++) {
-                console.log(player0[k].name);
+                displayHand.push(player0[k].name);
             }
+            console.log(displayHand.join(", "));
             turnCount++;
             console.log("You pass the game to Player1...");
             player1Turn();
@@ -347,13 +362,16 @@ function endGame() {
     if (player0.length == 1) {
         console.log("You lose!");
         console.log("Your hand:");
+        displayHand = [];
         for (let k = 0; k < player0.length; k++) {
-            console.log(player0[k].name);
-        };
+            displayHand.push(player0[k].name);
+        }
+        console.log(displayHand.join(", "));
+        console.log("");
     } else if (player1.length == 1) {
-        console.log("Player1 loses!");
+        console.log("Player1 loses!\n");
     } else {
-        console.log("Player2 loses!");
+        console.log("Player2 loses!\n");
     }
 
     return;
