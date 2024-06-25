@@ -1,9 +1,5 @@
-let hand = [{bingus: 1}];
+let hand = [{bingus: 1, dingus: 0},{bingus: 25, dingus: 0},{bingus: 11, dingus: 0}];
 
-let hand2 = [];
-
-if (hand.length + hand2.length == 1) {
-    console.log("Both are 0!");
-} else {
-    console.log("I AM A STUPID COMPUTER!!");
+for (let i = 0; i < hand.length; i++) {
+    console.log(hand[i].bingus);
 }
